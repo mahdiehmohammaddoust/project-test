@@ -3,10 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Car Loader</title>
     <link href="./style.css" rel="stylesheet">
+
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* Car Loader Container */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #7c958b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        /* Main Content Wrapper - اضافه شده برای مرکز کردن کامل */
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            height: 100%;
+            width: 100%;
+            max-width: 400px; /* مطابق با عرض جاده */
+        }
+        
+        /* Road Container */
+        .road-visible-area {
+            width: 400px;
+            height: 380px;
+            position: relative;
+            overflow: hidden;
+            margin-top: -40px; /* تنظیم موقعیت عمودی */
+        }
+        
+        /* Sun */
+        .sun {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at 30% 30%, #fff, #fbd644);
+            border-radius: 50%;
+            top: 100px;
+            right: 60px;
+            z-index: 1;
+        }
+        
+        /* Sun Rays */  
+        .sun::after {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle at center, rgba(255, 222, 89, 0.3) 0%, transparent 40%);
+            border-radius: 50%;
+            top: -125px;
+            left: -130px;
+        }
+        
+        /* Road Track */
+        .road-track {
+            width: 100%;
+            height: 25px;
+            background-color: #555;
+            border-radius: 7px;
+            position: absolute;
+            bottom: 40px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+        
+        /* Road Center Line */
+        .road-track::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: repeating-linear-gradient(
+                to right,
+                #fff,
+                #fff 20px,
+                transparent 20px,
+                transparent 40px
+            );
+            top: 10px;
+            left: 0;
+        }
+        
+        /* Moving Car */
+        .moving-car {
+            width: 110px;
+            height: 60px;
+            position: absolute;
+            bottom: 55px;
+            left: 0;
+            animation: carDrive 4s linear infinite;
+            transform: translateX(-110px);
+        }
+        
+        /* Car Body */
+        .car-body {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-color: #1c503c;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+        }
+        
+        /* Car Window */
+        .car-window {
+            position: absolute;
+            width: 40px;
+            height: 20px;
+            background-color: #aec2b9;
+            top: 10px;
+            left: 60px;
+            border-radius: 8px 8px 0 0;
+            border: 2px solid #9ed4a7;
+        }
+        
+        /* Wheels */
+        .wheel {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-color: #222;
+            border-radius: 50%;
+            bottom: -8px;
+            border: 3px solid #444;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+        }
+        
+        .front-wheel {
+            left: 15px;
+        }
+        
+        .back-wheel {
+            right: 15px;
+        }
+        
+        /* Animations */
+        @keyframes carDrive {
+            0% { transform: translateX(-110px); }
+            100% { transform: translateX(400px); }
+        }
+    </style>
 </head>
 <body>
-    
+    <!-- Car Loader -->
+    <div class="loader-container" id="carLoader">
+        <div class="content-wrapper">
+            <div class="road-visible-area">
+                <div class="sun"></div>
+                <div class="road-track"></div>
+                <div class="moving-car">
+                    <div class="car-body">
+                        <div class="car-window"></div>
+                        <div class="wheel front-wheel"></div>
+                        <div class="wheel back-wheel"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hide loader when page is loaded
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const loader = document.getElementById('carLoader');
+                loader.style.opacity = '0';
+                setTimeout(function() {
+                    loader.style.display = 'none';
+                }, 500);
+            }, 4000);
+        });
+    </script>
 </body>
 </html>
